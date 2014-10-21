@@ -22,11 +22,11 @@
 
 import UIKit
 
-class RWTCountryListViewController: UITableViewController {
+class RWTCountryListViewController: UITableViewController,RWTCountryResultsControllerDelegate {
   
   var countryDetailViewController: RWTCountryDetailViewController? = nil
   var countries = RWTCountry.countries()
-  
+    var searchController: UISearchController? = nil
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -34,6 +34,23 @@ class RWTCountryListViewController: UITableViewController {
     self.preferredContentSize =
       CGSize(width: 320.0, height: 600.0)
   }
+    
+    func addSearchBar() {
+        var resultsController = RWTCountryResultsController()
+        resultsController.countries = countries
+        resultsController.delegate = self
+        
+        searchController = UISearchController(searchResultsController: resultsController)
+        
+        searchController!.searchResultsUpdater = resultsController
+        
+        searchController!.searchBar.frame = CGRect(x: searchController!.searchBar.frame.origin.x,
+            y: searchController!.searchBar.frame.origin.y
+            , width: searchController!.searchBar.frame.size.width, height: 44.0)
+        
+        tableView.tableHeaderView = searchController!.searchBar
+        self.definesPresentationContext = true
+    }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -49,19 +66,29 @@ class RWTCountryListViewController: UITableViewController {
     // first country in the array
     let country = countries[0] as RWTCountry
     countryDetailViewController?.country = country
+    addSearchBar()
   }
   
+    
   // #pragma mark - Segues
   
   override func prepareForSegue(segue: UIStoryboardSegue,
     sender: AnyObject?) {
       
       if segue.identifier == "showDetail" {
-        let indexPath = self.tableView.indexPathForSelectedRow()
-        let country = countries[indexPath!.row] as RWTCountry
-        ((segue.destinationViewController as
-          UINavigationController).topViewController
-          as RWTCountryDetailViewController).country = country
+        var country: RWTCountry? = nil
+        if searchController!.active {
+            let resultsController = searchController!.searchResultsController as RWTCountryResultsController
+            let indexPath = resultsController.tableView.indexPathForSelectedRow()!
+            country = resultsController.filteredCountries[indexPath.row] as? RWTCountry
+        } else {
+            let indexPath = self.tableView.indexPathForSelectedRow()!
+            country = countries[indexPath.row] as? RWTCountry
+            
+        }
+        let navController = segue.destinationViewController as UINavigationController
+        let topViewController = navController.topViewController as RWTCountryDetailViewController
+        topViewController.country = country
       }
   }
   

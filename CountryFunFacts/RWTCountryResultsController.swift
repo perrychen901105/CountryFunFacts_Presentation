@@ -14,12 +14,12 @@ import UIKit
   optional func searchCountrySelected()
 }
 
-class RWTCountryResultsController: UITableViewController
+class RWTCountryResultsController: UITableViewController, UISearchResultsUpdating
  {
   
   var countries = RWTCountry.countries()
   var filteredCountries = NSMutableArray()
-  var delegate:RWTCountryResultsControllerDelegate?
+  var delegate: RWTCountryResultsControllerDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -43,6 +43,10 @@ class RWTCountryResultsController: UITableViewController
     return filteredCountries.count
   }
   
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 246.0
+    }
+    
   override func tableView(tableView: UITableView,
     cellForRowAtIndexPath indexPath: NSIndexPath)
     -> UITableViewCell {
@@ -65,6 +69,15 @@ class RWTCountryResultsController: UITableViewController
     }    
   }
 
+
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if !searchController.active {
+            return
+        }
+        self.filterContentForSearchText(searchController.searchBar.text)
+    }
+    
   // #pragma mark – Search Helper
   
   func filterContentForSearchText(searchText: String) {

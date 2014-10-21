@@ -25,7 +25,7 @@
 import UIKit
 
 class RWTCountryDetailViewController: UIViewController,
-UISplitViewControllerDelegate {
+UISplitViewControllerDelegate , UIPopoverPresentationControllerDelegate{
   
   @IBOutlet var flagImageView: UIImageView!
   @IBOutlet var quizQuestionLabel: UILabel!
@@ -114,6 +114,7 @@ func configureView() {
         
         detailPopover.barButtonItem = sender    // 3
         detailPopover.permittedArrowDirections = UIPopoverArrowDirection.Any
+        detailPopover.delegate = self
         presentViewController(contentViewController, animated: true, completion: nil)   // 4
     }
     
@@ -166,6 +167,16 @@ func configureView() {
       
       return true
   }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
+    }
+    
+    func presentationController(controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
+        let navController = UINavigationController(rootViewController: controller.presentedViewController)
+        
+        return navController
+    }
 }
 
 
