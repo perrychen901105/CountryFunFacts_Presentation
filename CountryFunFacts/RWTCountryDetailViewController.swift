@@ -98,8 +98,25 @@ func configureView() {
         answer4Button.setTitle(country!.quizAnswers[3],forState:UIControlState.Normal)
       }
     }
+    let detailsButton: UIBarButtonItem = UIBarButtonItem(title: "Facts", style: UIBarButtonItemStyle.Plain, target: self, action: "displayFacts:")
+    navigationItem.rightBarButtonItem = detailsButton
   }
   
+    func displayFacts(sender: UIBarButtonItem) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        var contentViewController: RWTCountryPopoverViewController = storyboard.instantiateViewControllerWithIdentifier("RWTCountryPopoverViewController") as RWTCountryPopoverViewController
+        contentViewController.country = country // 1    load from a storyboard, then assign the country that it should display facts for.
+        
+        contentViewController.modalPresentationStyle = UIModalPresentationStyle.Popover // 2    set the modalPresentationStyle property of contentViewController to UIModalPresentationStyle.Popover.
+        
+        var detailPopover: UIPopoverPresentationController = contentViewController.popoverPresentationController!
+        
+        detailPopover.barButtonItem = sender    // 3
+        detailPopover.permittedArrowDirections = UIPopoverArrowDirection.Any
+        presentViewController(contentViewController, animated: true, completion: nil)   // 4
+    }
+    
   override func updateViewConstraints() {
     super.updateViewConstraints()
     quizQuestionLabel.preferredMaxLayoutWidth = view.bounds.size.width - 40
@@ -109,17 +126,20 @@ func configureView() {
   @IBAction func quizAnswerButtonPressed(sender: UIButton) {
     let buttonTitle = sender.titleLabel?.text // 1 Retrieves the title string of the button so you can compare it against the correct answer.
     var message = ""
-    if buttonTitle == country!.correctAnswer {  // 2
+    if buttonTitle == country!.correctAnswer {  // 2 Assigns the appropriate response to message depending on whether the answer is correct or not
         message = "You answered correctly!"
     } else {
         message = "That answer is incorrect, please try again."
     }
     
     var alert = UIAlertController(title: nil, message: message,
-        preferredStyle: UIAlertControllerStyle.Alert)   // 3
+        preferredStyle: UIAlertControllerStyle.ActionSheet)   // 3    Creates a new instance of UIAlertController and presents it to the user. Make note of how you pass in UIAlertControllerStyle.Alert; this is a new enumerated type in iOS 8, which lets you modify how the alert controller appears. You'll learn more about this later.
     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (alert:UIAlertAction!) in
         println("You tapped OK")
-    })) // 4
+    })) // 4    Adds a button to close the alert, and a callback closure that is executed when the button is tapped. There's no need to worry about delegates when you use UIAlertAction
+    
+    alert.popoverPresentationController?.sourceView = view;
+    alert.popoverPresentationController?.sourceRect = sender.frame;
     
     self.presentViewController(alert, animated: true, completion: nil)  // 5
     

@@ -17,6 +17,7 @@
 		0124B79919772D590015DE95 /* CountryData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0124B79819772D590015DE95 /* CountryData.plist */; };
 		01D47D10197833C3008D6FD3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01D47D0F197833C3008D6FD3 /* Main.storyboard */; };
 		01D47D1219783638008D6FD3 /* RWTCountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D47D1119783638008D6FD3 /* RWTCountryTableViewCell.swift */; };
+		04A2DB1F19F610ED00153477 /* RWTCountryPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A2DB1E19F610ED00153477 /* RWTCountryPopoverViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		0124B79819772D590015DE95 /* CountryData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CountryData.plist; sourceTree = "<group>"; };
 		01D47D0F197833C3008D6FD3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		01D47D1119783638008D6FD3 /* RWTCountryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RWTCountryTableViewCell.swift; sourceTree = "<group>"; };
+		04A2DB1E19F610ED00153477 /* RWTCountryPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RWTCountryPopoverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		0124B76C19771DD00015DE95 /* CountryFunFacts */ = {
 			isa = PBXGroup;
 			children = (
+				04A2DB1E19F610ED00153477 /* RWTCountryPopoverViewController.swift */,
 				0124B76F19771DD00015DE95 /* AppDelegate.swift */,
 				0124B794197720AF0015DE95 /* RWTCountryListViewController.swift */,
 				0124B7921977201D0015DE95 /* RWTCountryDetailViewController.swift */,
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0124B7971977211B0015DE95 /* RWTCountry.swift in Sources */,
+				04A2DB1F19F610ED00153477 /* RWTCountryPopoverViewController.swift in Sources */,
 				01D47D1219783638008D6FD3 /* RWTCountryTableViewCell.swift in Sources */,
 				0124B77019771DD00015DE95 /* AppDelegate.swift in Sources */,
 				0124B7931977201D0015DE95 /* RWTCountryDetailViewController.swift in Sources */,
